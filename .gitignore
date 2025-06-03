@@ -3,3 +3,4 @@ terraform/.terraform/providers/registry.terraform.io/hashicorp/null/3.1.1/linux_
 terraform/.terraform.lock.hcl
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
+configs/services/homepage/logs/homepage.log
