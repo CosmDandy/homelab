@@ -1,30 +1,37 @@
-job "homepage" {
+job "overseerr" {
   datacenters = ["homelab"]
   type = "service"
 
-  group "homepage" {
+  group "overseerr" {
     count = 1
 
     network {
       mode = "host"
       port "http" {
-        static = 3000
+        static = 5055
       }
     }
 
-    task "homepage" {
+    # volume "overseerr_config" {
+    #   type   = "host"
+    #   source = "overseerr_config"
+    # }
+
+    task "overseerr" {
       driver = "docker"
 
       config {
-        image = "ghcr.io/gethomepage/homepage:latest"
+        image = "lscr.io/linuxserver/overseerr:latest"
         network_mode = "host"
-        volumes = [
-          "local/config:/app/config"
-        ]
       }
 
+      # volume_mount {
+      #   volume      = "overseerr_config"
+      #   destination = "/app/config"
+      # }
+
       service {
-        name = "homepage"
+        name = "overseerr"
         port = "http"
 
         check {
@@ -35,14 +42,12 @@ job "homepage" {
         }
       }
 
-      env {
-        HOMEPAGE_ALLOWED_HOSTS = "homepage.cosmdandy.ru"
-      }
-
       resources {
         cpu    = 500
-        memory = 512
+        memory = 256
       }
     }
   }
 }
+
+

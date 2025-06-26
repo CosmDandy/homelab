@@ -1,30 +1,37 @@
-job "homepage" {
+job "readarr" {
   datacenters = ["homelab"]
   type = "service"
 
-  group "homepage" {
+  group "readarr" {
     count = 1
 
     network {
       mode = "host"
       port "http" {
-        static = 3000
+        static = 8787
       }
     }
 
-    task "homepage" {
+    # volume "readarr_config" {
+    #   type   = "host"
+    #   source = "readarr_config"
+    # }
+
+    task "readarr" {
       driver = "docker"
 
       config {
-        image = "ghcr.io/gethomepage/homepage:latest"
+        image = "lscr.io/linuxserver/readarr:develop"
         network_mode = "host"
-        volumes = [
-          "local/config:/app/config"
-        ]
       }
 
+      # volume_mount {
+      #   volume      = "readarr_config"
+      #   destination = "/app/config"
+      # }
+
       service {
-        name = "homepage"
+        name = "readarr"
         port = "http"
 
         check {
@@ -35,14 +42,12 @@ job "homepage" {
         }
       }
 
-      env {
-        HOMEPAGE_ALLOWED_HOSTS = "homepage.cosmdandy.ru"
-      }
-
       resources {
         cpu    = 500
-        memory = 512
+        memory = 256
       }
     }
   }
 }
+
+

@@ -24,6 +24,11 @@ client {
     path      = "/opt/jellyfin/media"
     read_only = false
   }
+
+  host_volume "homepage_config" {
+    path      = "/home/cosmdandy/homelab/configs/services/homepage"
+    read_only = false
+  }
 }
 
 consul {

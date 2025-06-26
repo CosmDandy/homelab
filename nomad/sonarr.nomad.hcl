@@ -1,30 +1,37 @@
-job "homepage" {
+job "sonarr" {
   datacenters = ["homelab"]
   type = "service"
 
-  group "homepage" {
+  group "sonarr" {
     count = 1
 
     network {
       mode = "host"
       port "http" {
-        static = 3000
+        static = 8989
       }
     }
 
-    task "homepage" {
+    # volume "sonarr_config" {
+    #   type   = "host"
+    #   source = "sonarr_config"
+    # }
+
+    task "sonarr" {
       driver = "docker"
 
       config {
-        image = "ghcr.io/gethomepage/homepage:latest"
+        image = "lscr.io/linuxserver/sonarr:latest"
         network_mode = "host"
-        volumes = [
-          "local/config:/app/config"
-        ]
       }
 
+      # volume_mount {
+      #   volume      = "sonarr_config"
+      #   destination = "/app/config"
+      # }
+
       service {
-        name = "homepage"
+        name = "sonarr"
         port = "http"
 
         check {
@@ -35,14 +42,12 @@ job "homepage" {
         }
       }
 
-      env {
-        HOMEPAGE_ALLOWED_HOSTS = "homepage.cosmdandy.ru"
-      }
-
       resources {
         cpu    = 500
-        memory = 512
+        memory = 256
       }
     }
   }
 }
+
+

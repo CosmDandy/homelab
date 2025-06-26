@@ -1,30 +1,37 @@
-job "homepage" {
+job "lidarr" {
   datacenters = ["homelab"]
   type = "service"
 
-  group "homepage" {
+  group "lidarr" {
     count = 1
 
     network {
       mode = "host"
       port "http" {
-        static = 3000
+        static = 8686
       }
     }
 
-    task "homepage" {
+    # volume "lidarr_config" {
+    #   type   = "host"
+    #   source = "lidarr_config"
+    # }
+
+    task "lidarr" {
       driver = "docker"
 
       config {
-        image = "ghcr.io/gethomepage/homepage:latest"
+        image = "lscr.io/linuxserver/lidarr:latest"
         network_mode = "host"
-        volumes = [
-          "local/config:/app/config"
-        ]
       }
 
+      # volume_mount {
+      #   volume      = "lidarr_config"
+      #   destination = "/app/config"
+      # }
+
       service {
-        name = "homepage"
+        name = "lidarr"
         port = "http"
 
         check {
@@ -35,14 +42,12 @@ job "homepage" {
         }
       }
 
-      env {
-        HOMEPAGE_ALLOWED_HOSTS = "homepage.cosmdandy.ru"
-      }
-
       resources {
         cpu    = 500
-        memory = 512
+        memory = 256
       }
     }
   }
 }
+
+

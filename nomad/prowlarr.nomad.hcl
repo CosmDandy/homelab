@@ -1,30 +1,37 @@
-job "homepage" {
+job "prowlarr" {
   datacenters = ["homelab"]
   type = "service"
 
-  group "homepage" {
+  group "prowlarr" {
     count = 1
 
     network {
       mode = "host"
       port "http" {
-        static = 3000
+        static = 9696
       }
     }
 
-    task "homepage" {
+    # volume "prowlarr_config" {
+    #   type   = "host"
+    #   source = "prowlarr_config"
+    # }
+
+    task "prowlarr" {
       driver = "docker"
 
       config {
-        image = "ghcr.io/gethomepage/homepage:latest"
+        image = "lscr.io/linuxserver/prowlarr:latest"
         network_mode = "host"
-        volumes = [
-          "local/config:/app/config"
-        ]
       }
 
+      # volume_mount {
+      #   volume      = "prowlarr_config"
+      #   destination = "/app/config"
+      # }
+
       service {
-        name = "homepage"
+        name = "prowlarr"
         port = "http"
 
         check {
@@ -35,14 +42,12 @@ job "homepage" {
         }
       }
 
-      env {
-        HOMEPAGE_ALLOWED_HOSTS = "homepage.cosmdandy.ru"
-      }
-
       resources {
         cpu    = 500
-        memory = 512
+        memory = 256
       }
     }
   }
 }
+
+

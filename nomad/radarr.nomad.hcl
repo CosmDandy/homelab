@@ -1,30 +1,37 @@
-job "homepage" {
+job "radarr" {
   datacenters = ["homelab"]
   type = "service"
 
-  group "homepage" {
+  group "radarr" {
     count = 1
 
     network {
       mode = "host"
       port "http" {
-        static = 3000
+        static = 7878
       }
     }
 
-    task "homepage" {
+    # volume "radarr_config" {
+    #   type   = "host"
+    #   source = "radarr_config"
+    # }
+
+    task "radarr" {
       driver = "docker"
 
       config {
-        image = "ghcr.io/gethomepage/homepage:latest"
+        image = "lscr.io/linuxserver/radarr:latest"
         network_mode = "host"
-        volumes = [
-          "local/config:/app/config"
-        ]
       }
 
+      # volume_mount {
+      #   volume      = "radarr_config"
+      #   destination = "/app/config"
+      # }
+
       service {
-        name = "homepage"
+        name = "radarr"
         port = "http"
 
         check {
@@ -35,14 +42,12 @@ job "homepage" {
         }
       }
 
-      env {
-        HOMEPAGE_ALLOWED_HOSTS = "homepage.cosmdandy.ru"
-      }
-
       resources {
         cpu    = 500
-        memory = 512
+        memory = 256
       }
     }
   }
 }
+
+

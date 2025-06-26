@@ -1,0 +1,70 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/bookmarks
+
+- Develop:
+    - Me:
+        - abbr: GH
+          icon: si-github
+          href: https://github.com/CosmDandy
+    - Repos:
+        - abbr: GH
+          icon: si-github
+          href: https://github.com/CosmDandy?tab=repositories
+    - SSH Keys:
+        - abbr: GH
+          icon: si-github
+          href: https://github.com/settings/keys
+    - FirstVds:
+        - abbr: FV
+          href: https://my.firstvds.ru/billmgr?startform=vds
+    - Beget:
+        - abbr: BG
+          href: https://cp.beget.com/domains
+    - Keymap Editor:
+        - abbr: KE
+          href: https://nickcoutsos.github.io/keymap-editor/
+
+- AI:
+    - Claude:
+        - abbr: CL
+          icon: si-claude-#D97757
+          href: https://claude.ai/new
+    - ChatGPT:
+        - abbr: CG
+          icon: si-openai
+          href: https://chatgpt.com/
+    - Qwen:
+        - abbr: QW
+          href: https://chat.qwen.ai/
+    - Grok:
+        - abbr: GR
+          href: https://grok.com/
+    - DeepSeek:
+        - abbr: DS
+          href: https://chat.deepseek.com/
+
+- Hard:
+    - MonkeyType:
+        - abbr: MT
+          icon: si-monkeytype-#DA291C
+          href: https://monkeytype.com
+    - LeetCode:
+        - abbr: LC
+          icon: si-leetcode-#FFA116
+          href: https://leetcode.com/
+    - Codewars:
+        - abbr: CW
+          icon: si-codewars-#B1361E
+          href: https://www.codewars.com/
+    - Kaggle:
+        - abbr: KG
+          icon: si-kaggle-#20BEFF
+          href: https://www.kaggle.com/
+- Site:
+    - X-Studio:
+        - abbr: XS
+          href: https://x-studio-kaluga.ru/
+    - Portfolio:
+        - abbr: ME
+          href: https://cosmdandy.ru/

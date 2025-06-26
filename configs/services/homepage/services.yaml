@@ -1,0 +1,310 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+
+# - HomeLab:
+- Lab Infrastructure:
+    - Vault:
+        icon: hashicorp-vault
+        href: https://127.0.0.1:8200/
+        siteMonitor: https://127.0.0.1:8200/v1/sys/health
+        statusStyle: "dot"
+        description: Secrets and certificate management
+    - Nomad:
+        icon: hashicorp-nomad
+        href: http://127.0.0.1:4646/
+        siteMonitor: http://127.0.0.1:4646/v1/agent/health
+        statusStyle: "dot"
+        description: Workload orchestration and scheduling
+    - Consul:
+        icon: hashicorp-consul
+        href: http://127.0.0.1:8500/
+        siteMonitor: http://127.0.0.1:8500/v1/status/leader
+        statusStyle: "dot"
+        description: Service discovery and configuration
+
+- Lab Monitoring:
+    - Grafana:
+        href: 
+        siteMonitor: 
+        statusStyle: "dot"
+        icon: grafana
+        description: Metrics visualization and dashboards
+        widget:
+          type: grafana
+          url: http://grafana.host.or.ip:port
+          username: username
+          password: password
+
+- Lab Hypervizor:
+    - Proxmox:
+        icon: proxmox
+        href: https://pve-kaluga:8006/
+        siteMonitor: https://100.64.0.11:8006/
+        statusStyle: "dot"
+        description: Virtual machine and container management
+        widget:
+          type: proxmox
+          url: https://100.64.0.11:8006/
+          username: api@pam!homepage
+          password: 8e6f076b-9ee8-466f-9a82-d5d48e5920a9
+          node: pve-kaluga
+
+- Lab Services:
+    - Jellyfin:
+        icon: jellyfin
+        href: http://127.0.0.1:8096
+        siteMonitor: http://127.0.0.1:8096
+        statusStyle: "dot"
+        description: Media server for movies, TV shows and music
+        widget:
+          type: jellyfin
+          url: http://jellyfin:8096
+          key: 214fc31d7d3e47eaa84a89c8d91c5016
+          enableBlocks: false # optional, defaults to false
+          enableNowPlaying: true # optional, defaults to true
+          enableUser: false # optional, defaults to false
+          showEpisodeNumber: false # optional, defaults to false
+          expandOneStreamToTwoRows: false # optional, defaults to true
+    - Photoprism:
+        icon: photoprism
+        href: 
+        siteMonitor: 
+        statusStyle: "dot"
+        description: AI-powered photo management and sharing
+        widget:
+          type: photoprism
+          url: http://photoprism.host.or.ip:port
+          username: admin # required only if using username/password
+          password: password # required only if using username/password
+          key: # required only if using app passwords
+    - Immich:
+        icon: immich
+        href: http://127.0.0.1:2283/
+        siteMonitor: http://127.0.0.1:2283/api/server-info/ping
+        statusStyle: "dot"
+        description: Self-hosted photo and video management
+        widget:
+          type: immich
+          url: http://127.0.0.1:2283
+          key: your_immich_api_key
+    - Paperless:
+        icon: paperless
+        href: http://100.64.0.14:8000
+        ping: http://100.64.0.14:8000
+        statusStyle: "dot"
+        description: Document management and OCR system
+        widget:
+          type: paperlessngx
+          url: http://paperless-webserver:8000
+          key: bd240e414b3b0eb7b311e49fc36753980c4c4136
+    - Authentik:
+        icon: authentik
+        href: 
+        siteMonitor: 
+        statusStyle: "dot"
+        description: Identity provider and single sign-on
+        widget:
+          type: authentik
+          url: http://authentik.host.or.ip:port
+          key: api_token
+    - Home Assistant:
+        icon: home-assistant
+        href: http://127.0.0.1:8123/
+        siteMonitor: http://127.0.0.1:8123/
+        statusStyle: "dot"
+        description: Home automation and IoT platform
+    - MinIO:
+        icon: minio
+        href: 
+        siteMonitor: 
+        statusStyle: "dot"
+        description: S3-compatible object storage server
+    - Pi Hole:
+        icon: pi-hole
+        href: 
+        siteMonitor: 
+        statusStyle: "dot"
+        description: Network-wide ad blocking DNS server
+        widget:
+          type: pihole
+          url: http://pi.hole.or.ip
+          version: 6 # required if running v6 or higher, defaults to 5
+          key: yourpiholeapikey # optional, in v6 can be your password or app password
+    - Nextcloud:
+        icon: nextcloud
+        href: 
+        siteMonitor: 
+        statusStyle: "dot"
+        description: File sharing and collaboration platform
+    - n8n:
+        icon: n8n
+        href: 
+        siteMonitor: 
+        statusStyle: "dot"
+        description: Workflow automation and integration platform
+
+- Arr Stack:
+    - Prowlarr:
+        icon: prowlarr
+        href: http://127.0.0.1:9696/
+        siteMonitor: http://127.0.0.1:9696/ping
+        statusStyle: "dot"
+        description: Indexer manager for *arr apps
+        widget:
+          type: prowlarr
+          url: http://127.0.0.1:9696
+          key: your_prowlarr_api_key
+    - Overseerr:
+        icon: overseerr
+        href: http://127.0.0.1:5055/
+        siteMonitor: http://127.0.0.1:5055/api/v1/status
+        statusStyle: "dot"
+        description: Media request management
+        widget:
+          type: overseerr
+          url: http://127.0.0.1:5055
+          key: your_overseerr_api_key
+
+- Arr Stack Search:
+    - Lidarr:
+        icon: lidarr
+        href: http://127.0.0.1:8686/
+        siteMonitor: http://127.0.0.1:8686/ping
+        statusStyle: "dot"
+        description: Music collection manager
+        widget:
+          type: lidarr
+          url: http://127.0.0.1:8686
+          key: your_lidarr_api_key
+    - Radarr:
+        icon: radarr
+        href: http://127.0.0.1:7878/
+        siteMonitor: http://127.0.0.1:7878/ping
+        statusStyle: "dot"
+        description: Movie collection manager
+        widget:
+          type: radarr
+          url: http://127.0.0.1:7878
+          key: your_radarr_api_key
+          enableQueue: true # optional, defaults to false
+    - Sonarr:
+        icon: sonarr
+        href: http://127.0.0.1:8989/
+        siteMonitor: http://127.0.0.1:8989/ping
+        statusStyle: "dot"
+        description: TV series collection manager
+        widget:
+          type: sonarr
+          url: http://127.0.0.1:8989
+          key: your_sonarr_api_key
+          enableQueue: true # optional, defaults to false
+          enableEpisodes: true # optional, defaults to false
+    - Readarr:
+        icon: readarr
+        href: http://127.0.0.1:8787/
+        siteMonitor: http://127.0.0.1:8787/ping
+        statusStyle: "dot"
+        description: Book collection manager
+        widget:
+          type: readarr
+          url: http://127.0.0.1:8787
+          key: your_readarr_api_key
+    # - Bazarr:
+    #     icon: bazarr
+    #     href: http://127.0.0.1:6767/
+    #     siteMonitor: http://127.0.0.1:6767/api/system/status
+    #     statusStyle: "dot"
+    #     description: Subtitle management for Sonarr and Radarr
+    #     widget:
+    #       type: bazarr
+    #       url: http://127.0.0.1:6767
+    #       key: your_bazarr_api_key
+    # - Jackett:
+    #     icon: jackett
+    #     href: http://127.0.0.1:9117/
+    #     siteMonitor: http://127.0.0.1:9117/api/v2.0/server/config
+    #     statusStyle: "dot"
+    #     description: API Support for your favorite torrent trackers
+    #     widget:
+    #       type: jackett
+    #       url: http://127.0.0.1:9117
+    #       key: your_jackett_api_key
+    # - Tautulli:
+    #     icon: tautulli
+    #     href: http://127.0.0.1:8181/
+    #     siteMonitor: http://127.0.0.1:8181/api/v2?cmd=arnold
+    #     statusStyle: "dot"
+    #     description: Plex Media Server monitor and statistics
+    #     widget:
+    #       type: tautulli
+    #       url: http://127.0.0.1:8181
+    #       key: your_tautulli_api_key
+
+- Torrent:
+    - qBittorrent:
+        icon: qbittorrent
+        href: http://127.0.0.1:8080/
+        siteMonitor: http://127.0.0.1:8080/api/v2/app/version
+        statusStyle: "dot"
+        description: BitTorrent client for downloading content
+        widget:
+          type: qbittorrent
+          url: http://127.0.0.1:8080
+          username: admin
+          password: your_qbittorrent_password
+    - Transmission:
+        icon: transmission
+        href: http://127.0.0.1:9091/
+        siteMonitor: http://127.0.0.1:9091/transmission/rpc
+        statusStyle: "dot"
+        description: Lightweight BitTorrent client
+        widget:
+          type: transmission
+          url: http://127.0.0.1:9091
+          username: transmission
+          password: your_transmission_password
+
+- Underground Hypervizor:
+    - Proxmox:
+        icon: proxmox
+        href: https://proxmox:8006/
+        siteMonitor: https://100.64.0.22:8006/
+        statusStyle: "dot"
+        description: Secondary Proxmox cluster for testing
+        widget:
+          type: proxmox
+          url: https://100.64.0.22:8006
+          username: api@pam!homepage
+          password: 3b46429c-78fc-4a6f-80c6-38c732335da5
+          # node: pve-1 # optional
+
+- VDS:
+    - Headscale:
+        icon: tailscale
+        href: https://vpn.cosmdandy.ru/admin/
+        siteMonitor: https://vpn.cosmdandy.ru/admin/
+        statusStyle: "dot"
+        description: Self-hosted Tailscale control server
+        widget:
+          type: headscale
+          url: https://vpn.cosmdandy.ru
+          nodeId: 16
+          key: sHAAwg6.ey3zh66Fhngf5NzhlGCkzNekEovJDlU5
+    - Traefik:
+        icon: traefik
+        href: https://traefik.cosmdandy.ru/
+        siteMonitor: https://traefik.cosmdandy.ru/
+        statusStyle: "dot"
+        description: Reverse proxy and load balancer
+        widget:
+          type: traefik
+          url: https://traefik.cosmdandy.ru/
+          username: cosmdandy
+          password: onionpi
+
+    # - X-Studio:
+    #     href: https://xn----htbm8afgk0g.xn--h1ahn.xn--p1acf/
+    #     siteMonitor: https://xn----htbm8afgk0g.xn--h1ahn.xn--p1acf/
+    #     statusStyle: "dot"
+    #     description: Custom development studio

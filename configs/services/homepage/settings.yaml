@@ -1,0 +1,53 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/settings/
+title: Lab
+description: GO HARD OR GO HOME
+
+# useEqualHeights: true
+layout:
+  Lab Infrastructure:
+    # icon: asterisk
+    tab: Lab
+    style: row
+    columns: 3
+    disableCollapse: true
+  Lab Monitoring:
+    tab: Lab
+    # header: false
+    style: row
+    columns: 1
+    disableCollapse: true
+  Lab Hypervizor:
+    tab: Lab
+    # header: false
+    style: row
+    columns: 1
+    disableCollapse: true
+  Lab Services:
+    tab: Lab
+    style: row
+    columns: 3
+  Arr Stack:
+    tab: Lab
+    style: row
+    columns: 2
+  Arr Stack Search:
+    tab: Lab
+    style: row
+    columns: 4
+  Torrent:
+    tab: Lab
+    style: row
+    columns: 2
+  VDS:
+    tab: Cluster
+    style: row
+    columns: 2
+  Underground Hypervizor:
+    tab: Cluster
+
+headerStyle: underlined
+# headerStyle: boxedWidgets
+hideVersion: true
+

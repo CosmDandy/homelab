@@ -1,8 +1,7 @@
-
 job "homepage" {
   datacenters = ["homelab"]
   type = "service"
-  
+
   group "homepage" {
     count = 1
 
@@ -13,15 +12,34 @@ job "homepage" {
       }
     }
 
+    volume "homepage_config" {
+      type   = "host"
+      source = "homepage_config"
+    }
+
     task "homepage" {
       driver = "docker"
-      
+
       config {
         image = "ghcr.io/gethomepage/homepage:latest"
         network_mode = "host"
-        volumes = [
-          "../configs/services/homepage:/app/config"
-        ]
+      }
+
+      volume_mount {
+        volume      = "homepage_config"
+        destination = "/app/config"
+      }
+
+      service {
+        name = "homepage"
+        port = "http"
+
+        check {
+          type = "http"
+          path = "/"
+          interval = "10s"
+          timeout = "2s"
+        }
       }
 
       env {
@@ -30,8 +48,9 @@ job "homepage" {
 
       resources {
         cpu    = 500
-        memory = 512
+        memory = 256
       }
     }
   }
 }
+

@@ -12,6 +12,20 @@ job "jellyfin" {
       }
     }
 
+    service {
+      name = "jellyfin"
+      provider = "nomad"
+      port = "http"
+
+      check {
+        name = "alive"
+        type = "http"
+        path = "/"
+        interval = "10s"
+        timeout = "2s"
+      }
+    }
+
     task "jellyfin" {
       driver = "docker"
       
@@ -23,10 +37,10 @@ job "jellyfin" {
           "../data/jellyfin/cache:/media"
         ]
       }
-      
+
       resources {
         cpu    = 4000
-        memory = 2048
+        memory = 1024
       }
       
       # vault {
