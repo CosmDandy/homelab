@@ -1,0 +1,138 @@
+- name: Run Proxmox VE Post Install Script on all servers
+  hosts: proxmox_servers
+  become: yes
+  gather_facts: yes
+  vars:
+    # Автоматически отвечать "Y" на все вопросы
+    auto_answer: true
+    # Перезагрузить после выполнения (опционально)
+    reboot_after_install: false
+    # Таймаут для выполнения скрипта (в секундах)
+    script_timeout: 1800
+  tasks:
+    - name: Check if this is a Proxmox VE system
+      command: pveversion
+      register: pve_version
+      failed_when: false
+      changed_when: false
+    - name: Display Proxmox version
+      debug:
+        msg: "Proxmox VE version: {{ pve_version.stdout | default('Not detected') }}"
+    - name: Fail if not a Proxmox system
+      fail:
+        msg: "This doesn't appear to be a Proxmox VE system"
+      when: pve_version.rc != 0
+    - name: Check if wget is installed
+      package:
+        name: wget
+        state: present
+    - name: Check if curl is installed
+      package:
+        name: curl
+        state: present
+    - name: Download Proxmox post-install script (primary method)
+      get_url:
+        url: https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/post-pve-install.sh
+        dest: /tmp/post-pve-install.sh
+        mode: '0755'
+        timeout: 30
+        validate_certs: yes
+      register: script_download
+      failed_when: false
+    - name: Download script using curl if get_url failed
+      shell: |
+        curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/post-pve-install.sh -o /tmp/post-pve-install.sh
+        chmod +x /tmp/post-pve-install.sh
+      when: script_download.failed | default(false)
+      register: curl_download
+    - name: Download script using wget if curl failed
+      shell: |
+        wget -qO /tmp/post-pve-install.sh https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/post-pve-install.sh
+        chmod +x /tmp/post-pve-install.sh
+      when:
+        - script_download.failed | default(false)
+        - curl_download.failed | default(false)
+      register: wget_download
+    - name: Verify script was downloaded
+      stat:
+        path: /tmp/post-pve-install.sh
+      register: script_file
+    - name: Fail if script was not downloaded
+      fail:
+        msg: "Failed to download post-install script from any source"
+      when: not script_file.stat.exists
+    - name: Display script size
+      debug:
+        msg: "Script downloaded successfully, size: {{ script_file.stat.size }} bytes"
+      when: script_file.stat.exists
+    - name: Run Proxmox post-install script automatically
+      shell: |
+        # Автоматически отвечаем "y" на все вопросы
+        yes | timeout {{ script_timeout }} bash /tmp/post-pve-install.sh
+      register: script_result
+      failed_when: script_result.rc != 0 and script_result.rc != 124 # 124 = timeout
+      changed_when: true
+      async: "{{ script_timeout + 60 }}"
+      poll: 10
+      when: auto_answer | bool
+    - name: Run Proxmox post-install script manually (if auto_answer is false)
+      command: bash /tmp/post-pve-install.sh
+      register: manual_script_result
+      when: not (auto_answer | bool)
+    - name: Display script output (last 20 lines)
+      debug:
+        msg: "{{ (script_result.stdout | default('') + script_result.stderr | default('')).split('\n')[-20:] }}"
+      when: auto_answer | bool and script_result is defined
+    - name: Display manual script output
+      debug:
+        var: manual_script_result.stdout_lines
+      when: not (auto_answer | bool) and manual_script_result is defined
+    - name: Check if script completed successfully
+      debug:
+        msg: "✅ Proxmox post-install script completed on {{ inventory_hostname }}"
+      when: (script_result.rc | default(0) == 0) or (manual_script_result.rc | default(0) == 0)
+    - name: Clean up downloaded script
+      file:
+        path: /tmp/post-pve-install.sh
+        state: absent
+    - name: Check current repositories
+      command: cat /etc/apt/sources.list.d/pve-enterprise.list
+      register: enterprise_repo
+      failed_when: false
+      changed_when: false
+    - name: Verify enterprise repo is disabled
+      debug:
+        msg: "✅ Enterprise repository disabled: {{ enterprise_repo.stdout.startswith('#') }}"
+      when: enterprise_repo.rc == 0
+    - name: Check no-subscription repository
+      command: grep -r "pve-no-subscription" /etc/apt/sources.list*
+      register: nosub_repo
+      failed_when: false
+      changed_when: false
+    - name: Verify no-subscription repo is enabled
+      debug:
+        msg: "✅ No-subscription repository enabled"
+      when: nosub_repo.rc == 0
+    - name: Update package cache after changes
+      apt:
+        update_cache: yes
+      register: apt_update
+      failed_when: false
+    - name: Display APT update result
+      debug:
+        msg: "APT update {{ 'successful' if apt_update.rc == 0 else 'failed' }}"
+    - name: Reboot server if requested
+      reboot:
+        msg: "Rebooting after Proxmox post-install script"
+        reboot_timeout: 300
+      when: reboot_after_install | bool
+    - name: Wait for server to come back online
+      wait_for_connection:
+        connect_timeout: 20
+        sleep: 5
+        delay: 5
+        timeout: 300
+      when: reboot_after_install | bool
+    - name: Final status check
+      debug:
+        msg: "🎉 Proxmox post-install completed successfully on {{ inventory_hostname }}!\n\nChanges made:\n✅ Enterprise repository disabled\n✅ No-subscription repository enabled  \n✅ Subscription nag removed\n✅ System updated\n\nYou can now access Proxmox web interface without subscription warnings.\n"

@@ -1,0 +1,146 @@
+- name: Install Tailscale from source on Debian
+  hosts: proxmox_servers
+  become: yes
+  vars:
+    tailscale_archive: "tailscale_1_84_0.tgz" # Замените на имя вашего файла
+    temp_dir: "/tmp/tailscale-install"
+    # Tailscale configuration
+    tailscale_authkey: "6d0081f49c0fc75c80a81442b913c24057457e10c4102070"
+    tailscale_login_server: "https://vpn.cosmdandy.ru/"
+    # hostname берется из inventory для каждого сервера
+  tasks:
+    - name: Create temporary directory
+      file:
+        path: "{{ temp_dir }}"
+        state: directory
+        mode: '0755'
+    - name: Extract Tailscale archive
+      unarchive:
+        src: "{{ tailscale_archive }}"
+        dest: "{{ temp_dir }}"
+        remote_src: no
+    - name: Find extracted directory
+      find:
+        paths: "{{ temp_dir }}"
+        file_type: directory
+        depth: 1
+      register: extracted_dirs
+    - name: Set extracted directory path
+      set_fact:
+        extracted_path: "{{ extracted_dirs.files[0].path }}"
+      when: extracted_dirs.files|length > 0
+    - name: Copy tailscale binary to /usr/bin
+      copy:
+        src: "{{ extracted_path }}/tailscale"
+        dest: "/usr/bin/tailscale"
+        mode: '0755'
+        owner: root
+        group: root
+        remote_src: yes
+    - name: Copy tailscaled binary to /usr/sbin
+      copy:
+        src: "{{ extracted_path }}/tailscaled"
+        dest: "/usr/sbin/tailscaled"
+        mode: '0755'
+        owner: root
+        group: root
+        remote_src: yes
+    - name: Find systemd service files
+      find:
+        paths: "{{ extracted_path }}/systemd"
+        patterns: "*.service"
+      register: systemd_files
+    - name: Copy systemd service files
+      copy:
+        src: "{{ item.path }}"
+        dest: "/etc/systemd/system/{{ item.path | basename }}"
+        mode: '0644'
+        owner: root
+        group: root
+        remote_src: yes
+      loop: "{{ systemd_files.files }}"
+      when: systemd_files.files|length > 0
+    - name: Create tailscale state directory
+      file:
+        path: "/var/lib/tailscale"
+        state: directory
+        mode: '0700'
+        owner: root
+        group: root
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+    - name: Enable tailscaled service
+      systemd:
+        name: tailscaled
+        enabled: yes
+        state: started
+    - name: Wait for tailscaled to start
+      wait_for:
+        port: 41641
+        host: 127.0.0.1
+        timeout: 30
+      ignore_errors: yes
+    - name: Check tailscaled status
+      systemd:
+        name: tailscaled
+      register: tailscaled_status
+    - name: Display tailscaled status
+      debug:
+        msg: "Tailscaled service is {{ tailscaled_status.status.ActiveState }}"
+    - name: Check if tailscale is already connected
+      command: tailscale status --json
+      register: tailscale_status_check
+      failed_when: false
+      changed_when: false
+    - name: Parse tailscale status
+      set_fact:
+        tailscale_connected: "{{ (tailscale_status_check.stdout | from_json).BackendState == 'Running' }}"
+      when: tailscale_status_check.rc == 0
+      failed_when: false
+    - name: Set tailscale_connected to false if status check failed
+      set_fact:
+        tailscale_connected: false
+      when: tailscale_status_check.rc != 0
+    - name: Connect to Tailscale network
+      command: >
+        tailscale up --authkey={{ tailscale_authkey }} --hostname={{ hostvars[inventory_hostname]['tailscale_hostname'] }} --login-server={{ tailscale_login_server }} --accept-routes --accept-dns=false
+
+      register: tailscale_up_result
+      when: not tailscale_connected
+      failed_when: tailscale_up_result.rc != 0
+    - name: Wait for Tailscale connection
+      command: tailscale status --json
+      register: tailscale_final_status
+      until: (tailscale_final_status.stdout | from_json).BackendState == "Running"
+      retries: 10
+      delay: 2
+      when: not tailscale_connected
+    - name: Get Tailscale IP address
+      command: tailscale ip -4
+      register: tailscale_ip
+      changed_when: false
+    - name: Display Tailscale connection info
+      debug:
+        msg: |
+          Tailscale подключен успешно!
+          Hostname: {{ hostvars[inventory_hostname]['tailscale_hostname'] }}
+          IP адрес: {{ tailscale_ip.stdout }}
+          Login server: {{ tailscale_login_server }}
+    - name: Clean up temporary directory
+      file:
+        path: "{{ temp_dir }}"
+        state: absent
+    - name: Display next steps
+      debug:
+        msg: |
+          Tailscale установлен и активирован успешно!
+
+          Полезные команды:
+          - sudo tailscale status - статус подключения
+          - sudo tailscale ip - показать IP адреса
+          - sudo tailscale netcheck - проверка сети
+          - sudo tailscale logout - отключиься
+          - sudo tailscale ping <hostname> - пинг другого узла
+
+          Сервер {{ hostvars[inventory_hostname]['tailscale_hostname'] }} подключен к сети Tailscale

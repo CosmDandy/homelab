@@ -1,0 +1,51 @@
+- name: Debug Tailscale installation issues
+  hosts: proxmox_servers
+  become: yes
+  tasks:
+    - name: Check tailscaled service status
+      command: systemctl status tailscaled --no-pager -l
+      register: service_status
+      failed_when: false
+      changed_when: false
+    - name: Display service status
+      debug:
+        var: service_status.stdout_lines
+    - name: Check tailscaled logs
+      command: journalctl -u tailscaled --no-pager -n 20
+      register: service_logs
+      failed_when: false
+      changed_when: false
+    - name: Display service logs
+      debug:
+        var: service_logs.stdout_lines
+    - name: Check if /dev/net/tun exists
+      stat:
+        path: /dev/net/tun
+      register: tun_device
+    - name: Display TUN device status
+      debug:
+        msg: "TUN device exists: {{ tun_device.stat.exists }}"
+    - name: Check if tun module is loaded
+      command: lsmod | grep tun
+      register: tun_module
+      failed_when: false
+      changed_when: false
+    - name: Display TUN module status
+      debug:
+        msg: "TUN module loaded: {{ 'Yes' if tun_module.rc == 0 else 'No' }}"
+    - name: Check network capabilities
+      command: getcap /usr/sbin/tailscaled
+      register: tailscaled_caps
+      failed_when: false
+      changed_when: false
+    - name: Display tailscaled capabilities
+      debug:
+        var: tailscaled_caps.stdout
+    - name: Check if running in container
+      command: systemd-detect-virt
+      register: virt_check
+      failed_when: false
+      changed_when: false
+    - name: Display virtualization info
+      debug:
+        msg: "Virtualization: {{ virt_check.stdout | default('none') }}"
