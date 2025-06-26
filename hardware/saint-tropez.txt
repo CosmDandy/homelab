@@ -1,0 +1,563 @@
+saint-tropez
+    description: Mini Tower Computer
+    product: PowerEdge T30 (07C5)
+    vendor: Dell Inc.
+    serial: 16TT172
+    width: 64 bits
+    capabilities: smbios-2.8 dmi-2.8 smp vsyscall32
+    configuration: boot=normal chassis=mini-tower sku=07C5 uuid=4c4c4544-0036-5410-8054-b1c04f313732
+  *-core
+       description: Motherboard
+       product: 07T4MC
+       vendor: Dell Inc.
+       physical id: 0
+       version: A00
+       serial: /16TT172/CN7220069L00W6/
+     *-firmware
+          description: BIOS
+          vendor: Dell Inc.
+          physical id: 0
+          version: 1.0.0
+          date: 09/05/2016
+          size: 64KiB
+          capacity: 16MiB
+          capabilities: pci pnp upgrade shadowing cdboot bootselect edd int13floppy1200 int13floppy720 int13floppy2880 int5printscreen int9keyboard int14serial int17printer acpi usb biosbootspecification netboot uefi
+     *-cpu
+          description: CPU
+          product: Intel(R) Xeon(R) CPU E3-1225 v5 @ 3.30GHz
+          vendor: Intel Corp.
+          physical id: 18
+          bus info: cpu@0
+          version: 6.94.3
+          slot: Socket 0
+          size: 3401MHz
+          capacity: 4200MHz
+          width: 64 bits
+          clock: 100MHz
+          capabilities: lm fpu fpu_exception wp vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp x86-64 constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb pti tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp vnmi cpufreq
+          configuration: cores=4 enabledcores=4 microcode=158 threads=4
+        *-cache:0
+             description: L1 cache
+             physical id: 15
+             slot: L1 Cache
+             size: 128KiB
+             capacity: 128KiB
+             capabilities: synchronous internal write-back instruction
+             configuration: level=1
+        *-cache:1
+             description: L2 cache
+             physical id: 16
+             slot: L2 Cache
+             size: 1MiB
+             capacity: 1MiB
+             capabilities: synchronous internal write-back unified
+             configuration: level=2
+        *-cache:2
+             description: L3 cache
+             physical id: 17
+             slot: L3 Cache
+             size: 8MiB
+             capacity: 8MiB
+             capabilities: synchronous internal write-back unified
+             configuration: level=3
+     *-cache
+          description: L1 cache
+          physical id: 14
+          slot: L1 Cache
+          size: 128KiB
+          capacity: 128KiB
+          capabilities: synchronous internal write-back data
+          configuration: level=1
+     *-memory
+          description: System Memory
+          physical id: 19
+          slot: System board or motherboard
+          size: 64GiB
+        *-bank:0
+             description: DIMM DDR4 Synchronous 2400 MHz (0.4 ns)
+             product: KHX3200C16D4/16GX
+             vendor: Kingston
+             physical id: 0
+             serial: FD9753CA
+             slot: DIMM1
+             size: 16GiB
+             width: 64 bits
+             clock: 2400MHz (0.4ns)
+        *-bank:1
+             description: DIMM DDR4 Synchronous 2400 MHz (0.4 ns)
+             product: KHX3200C16D4/16GX
+             vendor: Kingston
+             physical id: 1
+             serial: E7973C8C
+             slot: DIMM2
+             size: 16GiB
+             width: 64 bits
+             clock: 2400MHz (0.4ns)
+        *-bank:2
+             description: DIMM DDR4 Synchronous 2400 MHz (0.4 ns)
+             product: KHX3200C16D4/16GX
+             vendor: Kingston
+             physical id: 2
+             serial: 0CD80D0C
+             slot: DIMM3
+             size: 16GiB
+             width: 64 bits
+             clock: 2400MHz (0.4ns)
+        *-bank:3
+             description: DIMM DDR4 Synchronous 2400 MHz (0.4 ns)
+             product: KHX3200C16D4/16GX
+             vendor: Kingston
+             physical id: 3
+             serial: FE976566
+             slot: DIMM4
+             size: 16GiB
+             width: 64 bits
+             clock: 2400MHz (0.4ns)
+     *-pci
+          description: Host bridge
+          product: Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Host Bridge/DRAM Registers
+          vendor: Intel Corporation
+          physical id: 100
+          bus info: pci@0000:00:00.0
+          version: 07
+          width: 32 bits
+          clock: 33MHz
+          configuration: driver=skl_uncore
+          resources: irq:0
+        *-pci:0
+             description: PCI bridge
+             product: 6th-10th Gen Core Processor PCIe Controller (x16)
+             vendor: Intel Corporation
+             physical id: 1
+             bus info: pci@0000:00:01.0
+             version: 07
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pm msi pciexpress normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:122
+        *-display
+             description: VGA compatible controller
+             product: HD Graphics P530
+             vendor: Intel Corporation
+             physical id: 2
+             bus info: pci@0000:00:02.0
+             version: 06
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pciexpress msi pm vga_controller bus_master cap_list rom
+             configuration: driver=i915 latency=0
+             resources: irq:141 memory:de000000-deffffff memory:c0000000-cfffffff ioport:f000(size=64) memory:c0000-dffff
+        *-usb
+             description: USB controller
+             product: 100 Series/C230 Series Chipset Family USB 3.0 xHCI Controller
+             vendor: Intel Corporation
+             physical id: 14
+             bus info: pci@0000:00:14.0
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi xhci bus_master cap_list
+             configuration: driver=xhci_hcd latency=0
+             resources: irq:127 memory:df130000-df13ffff
+           *-usbhost:0
+                product: xHCI Host Controller
+                vendor: Linux 6.8.12-11-pve xhci-hcd
+                physical id: 0
+                bus info: usb@1
+                logical name: usb1
+                version: 6.08
+                capabilities: usb-2.00
+                configuration: driver=hub slots=16 speed=480Mbit/s
+           *-usbhost:1
+                product: xHCI Host Controller
+                vendor: Linux 6.8.12-11-pve xhci-hcd
+                physical id: 1
+                bus info: usb@2
+                logical name: usb2
+                version: 6.08
+                capabilities: usb-3.00
+                configuration: driver=hub slots=10 speed=5000Mbit/s
+        *-generic
+             description: Signal processing controller
+             product: 100 Series/C230 Series Chipset Family Thermal Subsystem
+             vendor: Intel Corporation
+             physical id: 14.2
+             bus info: pci@0000:00:14.2
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi cap_list
+             configuration: driver=intel_pch_thermal latency=0
+             resources: irq:18 memory:df14f000-df14ffff
+        *-communication:0
+             description: Communication controller
+             product: 100 Series/C230 Series Chipset Family MEI Controller #1
+             vendor: Intel Corporation
+             physical id: 16
+             bus info: pci@0000:00:16.0
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list
+             configuration: driver=mei_me latency=0
+             resources: irq:140 memory:df14e000-df14efff
+        *-communication:1
+             description: Serial controller
+             product: 100 Series/C230 Series Chipset Family KT Redirection
+             vendor: Intel Corporation
+             physical id: 16.3
+             bus info: pci@0000:00:16.3
+             version: 31
+             width: 32 bits
+             clock: 66MHz
+             capabilities: msi pm 16550 cap_list
+             configuration: driver=serial latency=0
+             resources: irq:19 ioport:f0a0(size=8) memory:df14d000-df14dfff
+        *-sata
+             description: SATA controller
+             product: Q170/Q150/B150/H170/H110/Z170/CM236 Chipset SATA Controller [AHCI Mode]
+             vendor: Intel Corporation
+             physical id: 17
+             bus info: pci@0000:00:17.0
+             logical name: scsi0
+             logical name: scsi1
+             logical name: scsi3
+             version: 31
+             width: 32 bits
+             clock: 66MHz
+             capabilities: sata msi pm ahci_1.0 bus_master cap_list emulated
+             configuration: driver=ahci latency=0
+             resources: irq:125 memory:df148000-df149fff memory:df14c000-df14c0ff ioport:f090(size=8) ioport:f080(size=4) ioport:f060(size=32) memory:df14b000-df14b7ff
+           *-disk:0
+                description: ATA Disk
+                product: WDC WD5000AAKX-0
+                vendor: Western Digital
+                physical id: 0
+                bus info: scsi@0:0.0.0
+                logical name: /dev/sda
+                version: 1H19
+                serial: WD-WCC2E2C47N5P
+                size: 465GiB (500GB)
+                configuration: ansiversion=5 logicalsectorsize=512 sectorsize=512
+           *-disk:1
+                description: ATA Disk
+                product: Samsung SSD 870
+                physical id: 1
+                bus info: scsi@1:0.0.0
+                logical name: /dev/sdb
+                version: 1B6Q
+                serial: S5Y2NF0R140023V
+                size: 931GiB (1TB)
+                capabilities: gpt-1.00 partitioned partitioned:gpt
+                configuration: ansiversion=5 guid=8f9c9c8a-63dd-4cff-8d0c-3fc1375dc11b logicalsectorsize=512 sectorsize=512
+              *-volume:0
+                   description: BIOS Boot partition
+                   vendor: EFI
+                   physical id: 1
+                   bus info: scsi@1:0.0.0,1
+                   logical name: /dev/sdb1
+                   serial: d0da0c6f-a39e-47dc-80ba-b8a2ed1da18a
+                   capacity: 1006KiB
+                   capabilities: nofs
+              *-volume:1 UNCLAIMED
+                   description: Windows FAT volume
+                   vendor: mkfs.fat
+                   physical id: 2
+                   bus info: scsi@1:0.0.0,2
+                   version: FAT32
+                   serial: cd10-ccda
+                   size: 1022MiB
+                   capacity: 1023MiB
+                   capabilities: boot fat initialized
+                   configuration: FATs=2 filesystem=fat
+              *-volume:2
+                   description: LVM Physical Volume
+                   vendor: Linux
+                   physical id: 3
+                   bus info: scsi@1:0.0.0,3
+                   logical name: /dev/sdb3
+                   serial: efnx34-IY4h-X4t5-xCud-yNEH-b50b-YzFIM0
+                   size: 498GiB
+                   capabilities: multi lvm2
+           *-disk:2
+                description: ATA Disk
+                product: ST1000VX005-2EZ1
+                physical id: 0.0.0
+                bus info: scsi@3:0.0.0
+                logical name: /dev/sdc
+                version: CV11
+                serial: Z9CBH2H1
+                size: 931GiB (1TB)
+                configuration: ansiversion=5 logicalsectorsize=512 sectorsize=4096
+        *-pci:1
+             description: PCI bridge
+             product: 100 Series/C230 Series Chipset Family PCI Express Root Port #1
+             vendor: Intel Corporation
+             physical id: 1c
+             bus info: pci@0000:00:1c.0
+             version: f1
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:123
+           *-pci
+                description: PCI bridge
+                product: XIO2001 PCI Express-to-PCI Bridge
+                vendor: Texas Instruments
+                physical id: 0
+                bus info: pci@0000:02:00.0
+                version: 00
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pci pm msi pciexpress normal_decode bus_master cap_list
+        *-pci:2
+             description: PCI bridge
+             product: 100 Series/C230 Series Chipset Family PCI Express Root Port #5
+             vendor: Intel Corporation
+             physical id: 1c.4
+             bus info: pci@0000:00:1c.4
+             version: f1
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:124 memory:df000000-df0fffff ioport:d0000000(size=34603008)
+           *-network:0 DISABLED
+                description: Ethernet interface
+                product: BCM57840 NetXtreme II 10 Gigabit Ethernet
+                vendor: Broadcom Inc. and subsidiaries
+                physical id: 0
+                bus info: pci@0000:04:00.0
+                logical name: enp4s0f0
+                version: 11
+                serial: ac:9e:17:f7:18:23
+                capacity: 10Gbit/s
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm vpd msi msix pciexpress bus_master cap_list rom ethernet physical fibre 1000bt-fd 10000bt-fd
+                configuration: autonegotiation=off broadcast=yes driver=bnx2x driverversion=6.8.12-11-pve firmware=bc 7.8.79 latency=0 link=no multicast=yes port=fibre
+                resources: irq:16 memory:d1800000-d1ffffff memory:d1000000-d17fffff memory:d2010000-d201ffff memory:df080000-df0fffff
+           *-network:1 DISABLED
+                description: Ethernet interface
+                product: BCM57840 NetXtreme II 10 Gigabit Ethernet
+                vendor: Broadcom Inc. and subsidiaries
+                physical id: 0.1
+                bus info: pci@0000:04:00.1
+                logical name: enp4s0f1
+                version: 11
+                serial: ac:9e:17:f7:18:25
+                capacity: 10Gbit/s
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm vpd msi msix pciexpress bus_master cap_list rom ethernet physical fibre 1000bt-fd 10000bt-fd
+                configuration: autonegotiation=off broadcast=yes driver=bnx2x driverversion=6.8.12-11-pve firmware=bc 7.8.79 latency=0 link=no multicast=yes port=fibre
+                resources: irq:17 memory:d0800000-d0ffffff memory:d0000000-d07fffff memory:d2000000-d200ffff memory:df000000-df07ffff
+        *-isa
+             description: ISA bridge
+             product: C236 Chipset LPC/eSPI Controller
+             vendor: Intel Corporation
+             physical id: 1f
+             bus info: pci@0000:00:1f.0
+             version: 31
+             width: 32 bits
+             clock: 33MHz
+             capabilities: isa bus_master
+             configuration: latency=0
+           *-pnp00:00
+                product: PnP device PNP0c02
+                physical id: 0
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:01
+                product: PnP device PNP0501
+                physical id: 1
+                capabilities: pnp
+                configuration: driver=serial
+           *-pnp00:02
+                product: PnP device PNP0303
+                physical id: 2
+                capabilities: pnp
+                configuration: driver=i8042 kbd
+           *-pnp00:03
+                product: PnP device PNP0f03
+                physical id: 3
+                capabilities: pnp
+                configuration: driver=i8042 aux
+           *-pnp00:04
+                product: PnP device PNP0c02
+                physical id: 4
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:05
+                product: PnP device PNP0c02
+                physical id: 5
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:06
+                product: PnP device PNP0b00
+                physical id: 6
+                capabilities: pnp
+                configuration: driver=rtc_cmos
+           *-pnp00:07
+                product: PnP device INT3f0d
+                physical id: 7
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:08
+                product: PnP device PNP0c02
+                physical id: 8
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:09
+                product: PnP device PNP0c02
+                physical id: 9
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:0a
+                product: PnP device PNP0c02
+                physical id: a
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:0b
+                product: PnP device PNP0c02
+                physical id: b
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:0c
+                product: PnP device PNP0c31
+                physical id: c
+                capabilities: pnp
+                configuration: driver=tpm_tis
+        *-memory UNCLAIMED
+             description: Memory controller
+             product: 100 Series/C230 Series Chipset Family Power Management Controller
+             vendor: Intel Corporation
+             physical id: 1f.2
+             bus info: pci@0000:00:1f.2
+             version: 31
+             width: 32 bits
+             clock: 33MHz (30.3ns)
+             capabilities: bus_master
+             configuration: latency=0
+             resources: memory:df144000-df147fff
+        *-multimedia
+             description: Audio device
+             product: 100 Series/C230 Series Chipset Family HD Audio Controller
+             vendor: Intel Corporation
+             physical id: 1f.3
+             bus info: pci@0000:00:1f.3
+             logical name: card0
+             logical name: /dev/snd/controlC0
+             logical name: /dev/snd/hwC0D0
+             logical name: /dev/snd/hwC0D2
+             logical name: /dev/snd/pcmC0D0c
+             logical name: /dev/snd/pcmC0D0p
+             logical name: /dev/snd/pcmC0D3p
+             logical name: /dev/snd/pcmC0D7p
+             logical name: /dev/snd/pcmC0D8p
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list
+             configuration: driver=snd_hda_intel latency=32
+             resources: irq:142 memory:df140000-df143fff memory:df120000-df12ffff
+           *-input:0
+                product: HDA Intel PCH Rear Mic
+                physical id: 0
+                logical name: input10
+                logical name: /dev/input/event7
+           *-input:1
+                product: HDA Intel PCH Line Out
+                physical id: 1
+                logical name: input11
+                logical name: /dev/input/event8
+           *-input:2
+                product: HDA Intel PCH Front Headphone
+                physical id: 2
+                logical name: input12
+                logical name: /dev/input/event9
+           *-input:3
+                product: HDA Intel PCH HDMI/DP,pcm=3
+                physical id: 3
+                logical name: input13
+                logical name: /dev/input/event10
+           *-input:4
+                product: HDA Intel PCH HDMI/DP,pcm=7
+                physical id: 4
+                logical name: input14
+                logical name: /dev/input/event11
+           *-input:5
+                product: HDA Intel PCH HDMI/DP,pcm=8
+                physical id: 5
+                logical name: input15
+                logical name: /dev/input/event12
+           *-input:6
+                product: HDA Intel PCH Front Mic
+                physical id: 6
+                logical name: input9
+                logical name: /dev/input/event6
+        *-serial
+             description: SMBus
+             product: 100 Series/C230 Series Chipset Family SMBus
+             vendor: Intel Corporation
+             physical id: 1f.4
+             bus info: pci@0000:00:1f.4
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             configuration: driver=i801_smbus latency=0
+             resources: irq:16 memory:df14a000-df14a0ff ioport:f040(size=32)
+        *-network
+             description: Ethernet interface
+             product: Ethernet Connection (2) I219-LM
+             vendor: Intel Corporation
+             physical id: 1f.6
+             bus info: pci@0000:00:1f.6
+             logical name: enp0s31f6
+             version: 31
+             serial: 48:4d:7e:ce:75:92
+             size: 1Gbit/s
+             capacity: 1Gbit/s
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation
+             configuration: autonegotiation=on broadcast=yes driver=e1000e driverversion=6.8.12-11-pve duplex=full firmware=0.8-4 latency=0 link=yes multicast=yes port=twisted pair speed=1Gbit/s
+             resources: irq:126 memory:df100000-df11ffff
+  *-input:0
+       product: Sleep Button
+       physical id: 1
+       logical name: input0
+       logical name: /dev/input/event0
+       capabilities: platform
+  *-input:1
+       product: Power Button
+       physical id: 2
+       logical name: input1
+       logical name: /dev/input/event1
+       capabilities: platform
+  *-input:2
+       product: Power Button
+       physical id: 3
+       logical name: input2
+       logical name: /dev/input/event2
+       capabilities: platform
+  *-input:3
+       product: PC Speaker
+       physical id: 4
+       logical name: input6
+       logical name: /dev/input/event3
+       capabilities: isa
+  *-input:4
+       product: Dell WMI hotkeys
+       physical id: 5
+       logical name: input7
+       logical name: /dev/input/event4
+       capabilities: platform
+  *-input:5
+       product: Video Bus
+       physical id: 6
+       logical name: input8
+       logical name: /dev/input/event5
+       capabilities: platform
